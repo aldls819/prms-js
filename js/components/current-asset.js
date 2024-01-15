@@ -37,8 +37,9 @@ function addCurrentAssetEventListener() {
 }
 
 export function renderCurrentAsset() {
-  // TODO: 숫자에 콤마 작성
-  // TODO: currentFunds가 없는 경우
-  $currentAssetValue.textContent = store.currentFunds ?? "-";
+  //optional chaining 사용
+  //store.currentFunds? -> store.currentFunds가 없을 경우 undefined 반환
+  //undefined 대신 ?? 뒤에 대체할 수 있는 값을 "" 안에 표현해줄 수 있음
+  $currentAssetValue.textContent = store.currentFunds?.toLocaleString() ?? "-";
   $currentAssetInput.value = store.currentFunds;
 }
