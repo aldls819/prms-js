@@ -12,7 +12,7 @@
 
 ```json
 {
-	"currentFunds": 1000000,
+	"currentAsset": 1000000,
 }
 
 // 가계부 내역
