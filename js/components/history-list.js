@@ -39,21 +39,27 @@ export function renderHistoryList() {
   $sectionHistory.innerHTML = store.dateList
     .map(({ date, id: dateId }) => {
       const detail = store.detailList[dateId];
+      //detail 배열이 존재하지 않으면 아무것도 렌더링 되지 않도록 처리
       if (!detail?.length) return "";
 
+      // ` ` 내부에 js 변수 넣기 -> ${}
+      // 배열을 문자열로 변환 -> join 사용
       return `<article class="history-per-day">
       <p class="history-date">2021년 12월 1일</p>
-      <section class="history-item">
+
+      ${detail
+        .map(({ description, category, amount, fundAtTheTime, createAt }) => {
+          return `<section class="history-item">
         <section class="history-item-column">
-          <div class="create-at">10:30</div>
+          <div class="create-at">${createAt}</div>
           <div class="history-detail">
             <div class="history-detail-row history-detail-title">
-              <p>아이스 아메리카노</p>
+              <p>${description}</p>
             </div>
             <div class="history-detail-row history-detail-subtitle">
-              <p>카페</p>
+              <p>${category}</p>
               <p>
-                1000000
+                ${amount}
                 <span>원</span>
               </p>
             </div>
@@ -65,11 +71,14 @@ export function renderHistoryList() {
         <section class="history-item-caption">
           <p>
             <span>남은 자산</span>
-            <span>300000</span>
+            <span>${fundAtTheTime}</span>
             <span>원</span>
           </p>
         </section>
-      </section>
+      </section>`;
+        })
+        .join("")}
+      
     </article>`;
     })
     .join("");
