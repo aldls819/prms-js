@@ -55,14 +55,12 @@ export function addNewHistory(newHistory) {
      * - store.currentFunds 새로 갱신
      */
 
-    console.log("newhistory");
-
     //todayId가 존재하는지 확인
-    if (store.detailList[todayId]) {
-      //새로운 값으로 기존 값에 재할당
-      store.detailList[todayId] = store.detailList[todayId].push(newHistory);
+    if (store.detailList[store.todayId]) {
+      //push를 사용하면 갱신된다 재할당 하지 말자
+      store.detailList[store.todayId].push(newHistory);
     } else {
-      store.detailList[todayId] = [newHistory];
+      store.detailList[store.todayId] = [newHistory];
     }
 
     // 현재 자산 amount를 재할당

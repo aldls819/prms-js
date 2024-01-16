@@ -1,5 +1,5 @@
-import { renderCurrentAsset } from "../components/current-asset";
-import { store, removeHistory } from "../store";
+import { renderCurrentAsset } from "../components/current-asset.js";
+import { store, removeHistory } from "../store.js";
 
 const $sectionHistory = document.querySelector(".history");
 
@@ -48,7 +48,13 @@ export function renderHistoryList() {
       <p class="history-date">2021년 12월 1일</p>
 
       ${detail
+        .sort((a, b) => b.id - a.id)
         .map(({ description, category, amount, fundAtTheTime, createAt }) => {
+          // 2024-01-16T15:15:25.669Z -> 10:30 HH:mm
+          const time = new Date(createAt).toLocaleTimeString("ko-kr", {
+            dateStyle: "short",
+            hourCycle: "h24",
+          });
           return `<section class="history-item">
         <section class="history-item-column">
           <div class="create-at">${createAt}</div>
@@ -59,7 +65,7 @@ export function renderHistoryList() {
             <div class="history-detail-row history-detail-subtitle">
               <p>${category}</p>
               <p>
-                ${amount}
+                ${amount.toLocaleString()}
                 <span>원</span>
               </p>
             </div>
@@ -71,7 +77,7 @@ export function renderHistoryList() {
         <section class="history-item-caption">
           <p>
             <span>남은 자산</span>
-            <span>${fundAtTheTime}</span>
+            <span>${fundAtTheTime.toLocaleString()}</span>
             <span>원</span>
           </p>
         </section>
